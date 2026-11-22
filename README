@@ -1,2 +1,95 @@
+# Linux
 
-e
+A practical Linux project and learning repository for exploring open-source operating systems, command-line tools, system administration, and software development.
+
+Linux is a family of open-source operating systems used everywhere—from personal computers and servers to phones, cloud infrastructure, containers, and embedded devices.
+
+## Overview
+
+This repository is intended as a starting point for Linux users and developers. It can include scripts, configuration examples, exercises, documentation, and tools that demonstrate how Linux systems work.
+
+## Features
+
+- Explore Linux commands and shell workflows
+- Experiment with Bash and shell scripting
+- Learn basic system administration
+- Organize configuration and automation examples
+- Practice using Git and GitHub from the terminal
+
+## Getting Started
+
+### Requirements
+
+- A Linux distribution such as Ubuntu, Fedora, Debian, Arch Linux, or Linux Mint
+- A terminal emulator
+- Bash or another supported shell
+- Git
+
+On Debian/Ubuntu-based distributions, install Git with:
+
+```bash
+sudo apt update
+sudo apt install git
+```
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/kaktinsmartins13-wq/Linux.git
+cd Linux
+```
+
+## Repository Structure
+
+The structure may grow as the project develops. A typical layout might include:
+
+```text
+.
+├── scripts/       # Shell scripts and automation examples
+├── configs/       # Configuration examples
+├── docs/          # Notes and tutorials
+└── README.md      # Project documentation
+```
+
+## Basic Linux Commands
+
+```bash
+pwd             # Print the current directory
+ls              # List files
+cd /path        # Change directory
+mkdir example   # Create a directory
+cp file copy    # Copy a file
+mv old new      # Rename or move a file
+rm file         # Remove a file
+cat file        # Display file contents
+man command     # Read a command's manual page
+```
+
+## Contributing
+
+Contributions are welcome.
+
+1. Fork the repository.
+2. Create a descriptive branch:
+
+   ```bash
+   git switch -c feature/my-change
+   ```
+
+3. Make your changes and test any scripts.
+4. Commit and push the branch.
+5. Open a pull request describing the change.
+
+Please use clear commit messages and keep documentation accurate. Include comments in scripts where the purpose or behavior may not be obvious.
+
+## Helpful Resources
+
+- [Linux.org](https://linux.org/) — Linux learning resources
+- [Kernel.org](https://www.kernel.org/) — Official Linux kernel source and releases
+- [Linux manual pages](https://man7.org/linux/man-pages/) — Command and system interface documentation
+- [The Linux Command Line](https://linuxcommand.org/) — Free command-line guide
+- [GNU Bash Manual](https://www.gnu.org/software/bash/manual/) — Bash documentation
+
+## License
+
+Add a license file if you want to specify how others may use, modify, and distribute this project. The choice of license is an important part of open-source publishing.
