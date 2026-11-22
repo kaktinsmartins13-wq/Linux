@@ -1,0 +1,3 @@
+name: Bug report
+about: Report a kernel build, boot, subsystem, or fork-maintenance problem
+labels: bug

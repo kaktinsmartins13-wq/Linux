@@ -1,95 +1,113 @@
-# Linux
+# Linux kernel source fork
 
-A practical Linux project and learning repository for exploring open-source operating systems, command-line tools, system administration, and software development.
+This repository contains Linux kernel source code and tools. It is a learning and maintenance fork based on upstream Linux; it is not a separate operating-system distribution and should not be described as a collection of shell scripts or desktop tutorials.
 
-Linux is a family of open-source operating systems used everywhere—from personal computers and servers to phones, cloud infrastructure, containers, and embedded devices.
+The repository was imported from an upstream Linux source snapshot. Fork-specific changes are identified in the commit history.
 
-## Overview
+## Scope
 
-This repository is intended as a starting point for Linux users and developers. It can include scripts, configuration examples, exercises, documentation, and tools that demonstrate how Linux systems work.
+Use this repository to:
 
-## Features
+- study Linux kernel subsystems and interfaces;
+- build and test kernel configurations;
+- develop, review, or document kernel patches; and
+- maintain fork-specific changes separately from upstream work.
 
-- Explore Linux commands and shell workflows
-- Experiment with Bash and shell scripting
-- Learn basic system administration
-- Organize configuration and automation examples
-- Practice using Git and GitHub from the terminal
+## Current fork
 
-## Getting Started
+- Default branch: `master`
+- Base: upstream Linux source history
+- Fork-specific changes: inspect `git log` and compare with the nearest upstream baseline;
+- Maintainer: [kaktinsmartins13-wq](https://github.com/kaktinsmartins13-wq)
 
-### Requirements
+Do not assume that the latest upstream and this fork use the same release, configuration, or ABI.
 
-- A Linux distribution such as Ubuntu, Fedora, Debian, Arch Linux, or Linux Mint
-- A terminal emulator
-- Bash or another supported shell
-- Git
+## Building
 
-On Debian/Ubuntu-based distributions, install Git with:
-
-```bash
-sudo apt update
-sudo apt install git
-```
-
-### Clone the Repository
+The exact supported toolchain and architecture depend on the source revision and target platform. From the repository root:
 
 ```bash
-git clone https://github.com/kaktinsmartins13-wq/Linux.git
-cd Linux
+make defconfig
+make -j"$(nproc)"
 ```
 
-## Repository Structure
-
-The structure may grow as the project develops. A typical layout might include:
-
-```text
-.
-├── scripts/       # Shell scripts and automation examples
-├── configs/       # Configuration examples
-├── docs/          # Notes and tutorials
-└── README.md      # Project documentation
-```
-
-## Basic Linux Commands
+For an interactive configuration:
 
 ```bash
-pwd             # Print the current directory
-ls              # List files
-cd /path        # Change directory
-mkdir example   # Create a directory
-cp file copy    # Copy a file
-mv old new      # Rename or move a file
-rm file         # Remove a file
-cat file        # Display file contents
-man command     # Read a command's manual page
+make menuconfig
 ```
+
+Build only for a local architecture, and consult `Documentation/admin-guide/quickly-build-trimmed-linux.rst` or `Documentation/kbuild` for supported workflows.
+
+Cross-compiling requires the appropriate compiler and headers for the target. Example:
+
+```bash
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j"$(nproc)"
+```
+
+Do not install a development kernel on a production or critical system.
+
+## Testing
+
+Run checks appropriate to the modified subsystem:
+
+```bash
+make W=1 -j"$(nproc)" \
+  2>&1 | tee build.log
+```
+
+Use `scripts/checkpatch.pl` for patch style:
+
+```bash
+scripts/checkpatch.pl --git 1fef0c96ef4dc6261804e55f7151962dfaa33203..HEAD
+```
+
+Relevant subsystem selftests and unit tests should be run in a test VM or dedicated machine. Check subsystem documentation and `tools/testing/selftests` for the applicable test suite.
+
+## Repository layout
+
+- `arch/` — architecture-specific implementation
+- `kernel/` — core scheduling and process management
+- `mm/` — memory management
+- `fs/` — filesystems
+- `net/` — networking
+- `drivers/` — device drivers
+- `security/` — security subsystems and lockdown
+- `Documentation/` — kernel documentation
+- `tools/` — development and testing tools
+- `scripts/` — build and source-analysis scripts
 
 ## Contributing
 
-Contributions are welcome.
+Kernel changes should follow Linux's development practices:
 
-1. Fork the repository.
-2. Create a descriptive branch:
+1. Fork the repository and create a descriptive branch.
+2. Keep each commit focused on one behavior or fix.
+3. Write a descriptive commit subject and explain the motivation and result.
+4. Add or update documentation and tests when applicable.
+5. Run focused build, style, and self-test checks.
+6. Open a pull request describing the upstream baseline and hardware or VM used.
 
-   ```bash
-   git switch -c feature/my-change
-   ```
+For general patch submission, review `Documentation/process/submitting-patches.rst` and `Documentation/process/2.Process.rst`.
 
-3. Make your changes and test any scripts.
-4. Commit and push the branch.
-5. Open a pull request describing the change.
+## Upstreaming and synchronization
 
-Please use clear commit messages and keep documentation accurate. Include comments in scripts where the purpose or behavior may not be obvious.
+Prefer sending broadly useful changes upstream through the Linux kernel mailing lists and relevant subsystem maintainers. Record fork-only patches separately so they can be rebased or removed as upstream support is available.
 
-## Helpful Resources
+Before synchronizing, preserve fork-specific commits, import the upstream change or release, and re-run the project's build and test matrix.
 
-- [Linux.org](https://linux.org/) — Linux learning resources
-- [Kernel.org](https://www.kernel.org/) — Official Linux kernel source and releases
-- [Linux manual pages](https://man7.org/linux/man-pages/) — Command and system interface documentation
-- [The Linux Command Line](https://linuxcommand.org/) — Free command-line guide
-- [GNU Bash Manual](https://www.gnu.org/software/bash/manual/) — Bash documentation
+## Reporting issues
+
+Use the GitHub issue tracker for repository-documentation or fork-maintenance problems. Kernel bugs or security vulnerabilities should first follow the appropriate upstream Linux reporting channels; do not publish an active security vulnerability publicly.
 
 ## License
 
-Add a license file if you want to specify how others may use, modify, and distribute this project. The choice of license is an important part of open-source publishing.
+Linux is provided under the licenses listed in `LICENSES/`. No license change is implied by this repository fork.
+
+## Resources
+
+- [Linux kernel source](https://kernel.org)
+- [Kernel documentation](https://docs.kernel.org)
+- [Kernel mailing lists](https://vger.kernel.org/vger-lists.html)
+- [MAINTAINERS](MAINTAINERS)
